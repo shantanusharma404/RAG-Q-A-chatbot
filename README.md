@@ -38,7 +38,7 @@ No LangChain, no local embedding models — everything routes through the Gemini
 ### 1. Clone and set up environment
 
 ```bash
-git clone https://github.com/<your-username>/rag-chatbot.git
+git clone https://github.com/shantanusharma404/RAG-Q-A-chatbot.git
 cd rag-chatbot
 python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
