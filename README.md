@@ -1,118 +1,159 @@
 # 💬 RAG Q&A Chatbot
 
-A Retrieval-Augmented Generation chatbot that answers questions grounded in your own documents (PDF, DOCX, TXT). Upload files, ask questions in natural language, and get answers backed by the actual source content — with citations.
+> **An intelligent Retrieval-Augmented Generation (RAG) chatbot that delivers accurate, context-aware answers from your own documents using Google Gemini and semantic search.**
 
-🔗 **Live demo:** https://rag-q-a-chatbot-shantaunsharma15521552.streamlit.app/
+---
 
-> Note: hosted on Streamlit Community Cloud's free tier, which sleeps after 12 hours of inactivity. If you see a "Zzz" screen, just click the wake-up button and wait ~30 seconds.
+## 📖 Overview
+
+RAG Q&A Chatbot is an AI-powered document assistant that enables users to interact with their documents through natural language conversations.
+
+By combining **Retrieval-Augmented Generation (RAG)** with **Google Gemini**, the application retrieves the most relevant information from uploaded documents before generating a response. This approach produces reliable, context-aware answers while minimizing hallucinations.
+
+Whether you're searching through reports, notes, documentation, or research papers, the chatbot provides fast, source-backed responses directly from your own knowledge base.
 
 ---
 
 ## ✨ Features
 
-- 📄 Upload and index PDF, DOCX, and TXT documents
-- 🔍 Semantic search over your documents using vector embeddings
-- 💬 Natural-language Q&A grounded in retrieved context (not hallucinated)
-- 📌 Source citations shown alongside every answer
-- 🗂️ Persistent local vector store — index once, query anytime
-- ⚡ Lightweight dependency footprint — no local ML model downloads required
+* 📄 Upload PDF, DOCX, and TXT documents
+* 🔍 Semantic search using vector embeddings
+* 🤖 AI-powered contextual responses with Google Gemini
+* 📚 Source citations for every generated answer
+* 💾 Persistent document indexing with ChromaDB
+* ⚡ Fast document retrieval and response generation
+* 🎨 Clean and responsive Streamlit interface
+
+---
+
+## 🧠 Architecture
+
+```text
+                 ┌──────────────────┐
+                 │ Upload Documents │
+                 └─────────┬────────┘
+                           │
+                           ▼
+                Document Parsing & Chunking
+                           │
+                           ▼
+                Gemini Embedding Generation
+                           │
+                           ▼
+                 Store Vectors in ChromaDB
+                           │
+                           ▼
+                    User Asks a Question
+                           │
+                           ▼
+               Semantic Similarity Retrieval
+                           │
+                           ▼
+             Retrieved Context + User Prompt
+                           │
+                           ▼
+                 Gemini 2.5 Flash Generates
+                     Context-Aware Answer
+                           │
+                           ▼
+                Answer with Source Citations
+```
+
+---
+
+## ⭐ Core Capabilities
+
+* Retrieval-Augmented Generation (RAG)
+* Semantic Vector Search
+* Google Gemini Integration
+* Persistent Vector Database
+* Context-Aware Question Answering
+* Source Citation Support
+* Lightweight & Scalable Architecture
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|---|---|
-| UI | [Streamlit](https://streamlit.io) |
-| Vector store | [ChromaDB](https://www.trychroma.com) |
-| Embeddings | Gemini (`gemini-embedding-001`) |
-| Generation | Gemini (`gemini-2.5-flash`) |
-| Document parsing | `pypdf`, `python-docx` |
-
-No LangChain, no local embedding models — everything routes through the Gemini API using the [`google-genai`](https://github.com/googleapis/python-genai) SDK, keeping the install lightweight and avoiding local dependency conflicts.
+| Category             | Technology              |
+| -------------------- | ----------------------- |
+| Language             | Python                  |
+| Frontend             | Streamlit               |
+| Large Language Model | Google Gemini 2.5 Flash |
+| Embeddings           | Gemini Embedding API    |
+| Vector Database      | ChromaDB                |
+| Document Processing  | PyPDF, python-docx      |
 
 ---
 
-## 🚀 Quick Start
+## 📂 Project Structure
 
-### 1. Clone and set up environment
+```text
+RAG-Q-A-Chatbot/
+│
+├── app.py
+├── rag_pipeline.py
+├── document_loader.py
+├── requirements.txt
+├── .env.example
+├── chroma_db/
+├── data/
+└── .streamlit/
+```
+
+---
+
+## 📌 Deployment
+
+The application is deployed on **Streamlit Community Cloud** and can be accessed here:
+
+**Application**
+https://rag-q-a-chatbot-shantaunsharma15521552.streamlit.app/
+
+**Repository**
+https://github.com/shantanusharma404/RAG-Q-A-chatbot
+
+---
+
+## 🚀 Getting Started
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/shantanusharma404/RAG-Q-A-chatbot.git
-cd rag-chatbot
-python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
+cd RAG-Q-A-chatbot
+```
+
+Install the required dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
 
-> Requires Python 3.10–3.12.
+Create a `.env` file and add your Gemini API key:
 
-### 2. Add your Gemini API key
-
-Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
-
-```bash
-cp .env.example .env
-# then edit .env and paste your key:
-# GEMINI_API_KEY=your_actual_key_here
+```env
+GEMINI_API_KEY=YOUR_API_KEY
 ```
 
-### 3. Run
+Run the application:
 
 ```bash
 streamlit run app.py
 ```
 
-Opens at `http://localhost:8501`.
+---
 
-### 4. Use it
+## 👨‍💻 Author
 
-1. Upload PDF/DOCX/TXT files in the sidebar
-2. Click **Ingest** to chunk, embed, and store them
-3. Ask questions in the chat box — answers include source citations
-4. Use **Reset DB** to clear the vector store and start fresh
+**Shantanu Sharma**
+
+Computer Science & Design Student • AI & Software Development Enthusiast
+
+GitHub: https://github.com/shantanusharma404
 
 ---
 
-## 📁 Project Structure
+## ⭐ Support
 
-```
-rag_chatbot/
-├── app.py                 # Streamlit UI — entry point
-├── rag_pipeline.py        # Embeddings + ChromaDB + Gemini logic
-├── document_loader.py     # PDF/DOCX/TXT loading + chunking
-├── requirements.txt
-├── .env.example
-├── .streamlit/
-│   └── secrets.toml.example
-├── data/                  # (optional) drop source docs here
-└── chroma_db/             # Auto-created — persisted vector store
-```
-
----
-
-## ☁️ Deployment
-
-Deployed on [Streamlit Community Cloud](https://share.streamlit.io) (free):
-
-1. Push this repo to GitHub
-2. Go to share.streamlit.io → **New app** → select this repo, branch `main`, file `app.py`
-3. Under **Advanced settings → Secrets**, add:
-   ```toml
-   GEMINI_API_KEY = "your_actual_key_here"
-   ```
-4. Deploy
-
-Full deployment options (including Docker, Render, and Hugging Face Spaces for persistent storage) are documented in [`SETUP.md`](./SETUP.md).
-
----
-
-## ⚠️ A Note on Free-Tier Limits
-
-This project runs entirely on Google's Gemini free tier, which has rate limits (~10-15 requests/minute) and occasionally deprecates model names. If you hit a `429` error, check [ai.google.dev/gemini-api/docs/rate-limits](https://ai.google.dev/gemini-api/docs/rate-limits) for currently supported free-tier models.
-
----
-
-## 📜 License
-
-Personal / educational project.
+If you found this project useful, consider giving it a ⭐ on GitHub. Your support helps the project reach more developers and encourages future contributions.
